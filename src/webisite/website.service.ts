@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Website } from './website.entity';
 import axios from 'axios';
+import { CONSTANTS } from 'env/constants';
 
 @Injectable()
 export class WebsiteService {
@@ -12,12 +13,11 @@ export class WebsiteService {
     private websiteRepository: Repository<Website>,
   ) {}
 
-  private readonly openAiApiUrl = 'https://api.openai.com/v1/chat/completions'; // Update with the correct API endpoint
-  private readonly openAiApiKey =
-    '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';
-  //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
+  private readonly openAiApiUrl = CONSTANTS.OPEN_API_URL; // Update with the correct API endpoint
+  private readonly openAiApiKey = CONSTANTS.OPEN_API_KEY;
+  // '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';
+
   async generateIslamicContent(userInput: string): Promise<string | any> {
-    console.log('userInput', userInput);
     try {
       const response = await axios.post(
         this.openAiApiUrl,
@@ -30,7 +30,7 @@ export class WebsiteService {
             },
             {
               role: 'user',
-              content: `Generate Islamic content related to: ${userInput} without title and just 50 words`,
+              content: `Generate Islamic content related to: ${userInput} without title`,
             },
           ],
           temperature: 0.9,
@@ -45,43 +45,38 @@ export class WebsiteService {
       );
       return response?.data?.choices?.[0]?.message?.content;
     } catch (error) {
-      console.error(
-        'Error calling OpenAI API:',
-        error.response?.status,
-        error.response?.data,
-      );
-      throw new Error('Failed to generate content');
+      if (error.code === 'EAI_AGAIN') {
+        // Retry the request after a short delay
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      } else {
+        console.error(error);
+        throw new Error('Failed to generate content');
+      }
     }
   }
 
   async getWebsiteInfo(id: string | number): Promise<Website> {
-    console.log('id in target va', id);
     const data = this.websiteRepository.findOne({
       where: { targetUser: +id },
     });
-    console.log('data', data);
     return data;
   }
 
   async getAllUsers(): Promise<Website[]> {
     const allUsers = this.websiteRepository.find();
-    console.log('allusers', allUsers);
     return allUsers;
   }
 
   async setWebsiteInfo(websiteInfo: Website): Promise<Website | any> {
-    console.log('webSiteInfor', websiteInfo);
     await this.websiteRepository.delete({
       targetUser: websiteInfo?.targetUser,
     });
 
+    // const ai_data = 'there are a problem in the open ai key';
     const ai_data = await this.generateIslamicContent(
       websiteInfo?.websiteDescription,
     );
-
-    console.log('webSiteInfo', websiteInfo);
-    console.log('ai_data', ai_data);
-    // return ai_data;
+    console.log('aiDataaa', ai_data);
     return this.websiteRepository.save({
       ...websiteInfo,
       ai_description: ai_data,
