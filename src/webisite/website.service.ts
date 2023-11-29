@@ -5,12 +5,16 @@ import { Repository } from 'typeorm';
 import { Website } from './website.entity';
 import axios from 'axios';
 import { CONSTANTS } from 'env/constants';
+import { User } from 'src/users/user.entity';
 
 @Injectable()
 export class WebsiteService {
   constructor(
     @InjectRepository(Website)
     private websiteRepository: Repository<Website>,
+
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
   ) {}
 
   private readonly openAiApiUrl = CONSTANTS.OPEN_API_URL; // Update with the correct API endpoint
@@ -30,7 +34,7 @@ export class WebsiteService {
             },
             {
               role: 'user',
-              content: `Generate Islamic content related to: ${userInput} without title`,
+              content: `Generate Islamic content as introduction for website related to: ${userInput} `,
             },
           ],
           temperature: 0.9,
@@ -56,9 +60,15 @@ export class WebsiteService {
   }
 
   async getWebsiteInfo(id: string | number): Promise<Website> {
-    const data = this.websiteRepository.findOne({
-      where: { targetUser: +id },
+    const user = await this.userRepository.findOne({
+      where: { id: +id },
     });
+    console.log('user', user);
+    const data = this.websiteRepository.findOne({
+      where: { targetUser: user },
+    });
+
+    console.log('data', data);
     return data;
   }
 

@@ -1,5 +1,12 @@
 // src/website/website.entity.ts
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/users/user.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity()
 export class Website {
@@ -15,6 +22,10 @@ export class Website {
   @Column()
   ai_description: string;
 
-  @Column()
-  targetUser: number;
+  @ManyToOne(() => User, (user) => user.websites)
+  @JoinColumn({ name: 'targetUserId' })
+  targetUser: User;
+
+  // @Column()
+  // targetUser: number;
 }
