@@ -1,5 +1,5 @@
 // src/users/user.service.ts
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
@@ -13,6 +13,11 @@ export class UserService {
   ) {}
 
   async create(user: CreateUserDto): Promise<CreateUserDto> {
+    const { name, password } = user;
+
+    if (!name || !password) {
+      throw new BadRequestException('Name and password are required');
+    }
     return await this.userRepository.save(user);
   }
 

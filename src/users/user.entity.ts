@@ -1,5 +1,5 @@
 // src/users/user.entity.ts
-import { Website } from 'src/webisite/website.entity';
+import { Website } from '../webisite/website.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()

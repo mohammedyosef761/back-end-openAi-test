@@ -1,5 +1,5 @@
 // src/website/website.entity.ts
-import { User } from 'src/users/user.entity';
+import { User } from '../users/user.entity';
 import {
   Entity,
   Column,
@@ -22,7 +22,7 @@ export class Website {
   @Column()
   ai_description: string;
 
-  @ManyToOne(() => User, (user) => user.websites)
+  @ManyToOne(() => User, (user) => user.websites, { cascade: true })
   @JoinColumn({ name: 'targetUserId' })
   targetUser: User;
 
