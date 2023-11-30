@@ -34,7 +34,7 @@ export class WebsiteService {
             },
             {
               role: 'user',
-              content: `Generate Islamic content as introduction for website related to: ${userInput} `,
+              content: `Generate Islamic content as introduction for website related to: ${userInput} just in 25 words`,
             },
           ],
           temperature: 0.9,
@@ -63,12 +63,10 @@ export class WebsiteService {
     const user = await this.userRepository.findOne({
       where: { id: +id },
     });
-    console.log('user', user);
     const data = this.websiteRepository.findOne({
       where: { targetUser: user },
     });
 
-    console.log('data', data);
     return data;
   }
 
@@ -78,15 +76,17 @@ export class WebsiteService {
   }
 
   async setWebsiteInfo(websiteInfo: Website): Promise<Website | any> {
+    const user = await this.userRepository.findOne({
+      where: { id: +websiteInfo?.targetUser },
+    });
     await this.websiteRepository.delete({
-      targetUser: websiteInfo?.targetUser,
+      targetUser: user,
     });
 
     // const ai_data = 'there are a problem in the open ai key';
     const ai_data = await this.generateIslamicContent(
       websiteInfo?.websiteDescription,
     );
-    console.log('aiDataaa', ai_data);
     return this.websiteRepository.save({
       ...websiteInfo,
       ai_description: ai_data,

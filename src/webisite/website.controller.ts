@@ -13,10 +13,7 @@ export class WebsiteController {
     const id = req['headers']?.id;
     return this.websiteService.getWebsiteInfo(id);
   }
-  // @Get()
-  // async getAllUsers(): Promise<Website[]> {
-  //   return this.websiteService.getAllUsers();
-  // }
+
   @Post()
   async setWebsiteInfo(@Body() websiteInfo: Website): Promise<Website> {
     console.log('webSite', websiteInfo);
