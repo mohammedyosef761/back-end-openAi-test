@@ -6,16 +6,26 @@ import { Website } from './webisite/website.entity';
 import { WebsiteModule } from './webisite/website.module';
 import { UsersModule } from './users/user.module';
 import { User } from './users/user.entity';
+import { ConfigModule } from '@nestjs/config';
+
+const envFilePath =
+  process.env.PWD == '/var/www/full-stack-test'
+    ? 'production'
+    : process.env.NODE_ENV;
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: [`env/${envFilePath}.env`],
+    }),
     TypeOrmModule.forRoot({
       type: 'mariadb',
-      host: process.env.DB_HOST || 'localhost',
-      port: parseInt(process.env.DB_PORT, 10) || 3306,
-      username: process.env.DB_USERNAME || 'root',
-      password: process.env.DB_PASSWORD || '',
-      database: process.env.DB_DATABASE || 'misraj_test',
+      host: process.env.DB_HOST,
+      port: +process.env.DB_PORT,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
       entities: [Website, User],
       synchronize: true,
     }),
@@ -27,7 +37,14 @@ import { User } from './users/user.entity';
 })
 export class AppModule {
   constructor() {
-    console.log('process.env : ', process.env.DB_DATABASE);
+    console.log('process.env : ', process.env.DB_NAME);
+    console.log(
+      process.env.DB_HOST,
+      +process.env.DB_PORT,
+      process.env.DB_USERNAME,
+      process.env.DB_PASSWORD,
+      process.env.DB_DATABASE,
+    );
     // console.log('PWD : ', process.env.PWD);
     // console.log('NODE_ENV : ', process.env.NODE_ENV);
   }
