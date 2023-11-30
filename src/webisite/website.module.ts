@@ -6,7 +6,7 @@ import { WebsiteService } from './website.service';
 import { User } from 'src/users/user.entity';
 import { UserController } from 'src/users/user.controller';
 import { UsersModule } from 'src/users/user.module';
-import { UserService } from 'src/users/user.services';
+import { UserService } from 'src/users/user.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Website, User])],

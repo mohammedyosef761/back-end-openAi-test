@@ -2,7 +2,7 @@
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserController } from '../user.controller';
-import { UserService } from '../user.services';
+import { UserService } from '../user.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { User } from '../user.entity';
 
@@ -42,6 +42,7 @@ describe('UserController', () => {
         name: 'Test User',
         password: 'password',
       };
+
       const result: CreateUserDto = createUserDto; // Adjust as needed
 
       jest.spyOn(userService, 'create').mockResolvedValue(result);

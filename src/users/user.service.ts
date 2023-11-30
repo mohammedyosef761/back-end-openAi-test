@@ -18,7 +18,8 @@ export class UserService {
     if (!name || !password) {
       throw new BadRequestException('Name and password are required');
     }
-    return await this.userRepository.save(user);
+    const newUser = this.userRepository.create(user);
+    return await this.userRepository.save(newUser);
   }
 
   async getAllUsers(): Promise<User[]> {
