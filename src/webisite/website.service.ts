@@ -85,7 +85,7 @@ export class WebsiteService {
     const ai_data = await this.generateIslamicContent(
       websiteInfo?.websiteDescription,
     );
-    console.log('aidata', ai_data);
+
     return this.websiteRepository.save({
       ...websiteInfo,
       ai_description: ai_data,
