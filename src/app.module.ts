@@ -45,6 +45,7 @@ export class AppModule {
       process.env.DB_PASSWORD,
       process.env.DB_DATABASE,
     );
+    console.log('process.en.pwd', process.env.PWD);
     // console.log('PWD : ', process.env.PWD);
     // console.log('NODE_ENV : ', process.env.NODE_ENV);
   }
