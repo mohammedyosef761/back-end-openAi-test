@@ -37,6 +37,7 @@ const envFilePath =
 })
 export class AppModule {
   constructor() {
+    console.log('process.en.pwd', process.env.PWD);
     console.log('process.env : ', process.env.DB_NAME);
     console.log(
       process.env.DB_HOST,
