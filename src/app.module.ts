@@ -9,8 +9,8 @@ import { User } from './users/user.entity';
 import { ConfigModule } from '@nestjs/config';
 
 const envFilePath =
-  process.env.PWD == '/var/www/full-stack-test'
-    ? 'production'
+  process.env.PWD == 'https://calm-erin-badger-sock.cyclic.app'
+    ? 'prod'
     : process.env.NODE_ENV;
 
 @Module({
