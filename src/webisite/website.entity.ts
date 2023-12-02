@@ -25,7 +25,4 @@ export class Website {
   @ManyToOne(() => User, (user) => user.websites, { cascade: true })
   @JoinColumn({ name: 'targetUserId' })
   targetUser: User;
-
-  // @Column()
-  // targetUser: number;
 }

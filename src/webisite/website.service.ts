@@ -81,12 +81,9 @@ export class WebsiteService {
       targetUser: user,
     });
 
-    // const ai_data = 'there are a problem in the open ai key';
     const ai_data = await this.generateIslamicContent(
       websiteInfo?.websiteDescription,
     );
-
-    // console.log('ai_data', ai_data);
 
     return this.websiteRepository.save({
       ...websiteInfo,

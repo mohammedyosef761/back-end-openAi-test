@@ -21,11 +21,11 @@ const envFilePath =
     }),
     TypeOrmModule.forRoot({
       type: 'mariadb',
-      host: process.env.DB_HOST || 'sql12.freesqldatabase.com',
+      host: process.env.DB_HOST,
       port: +process.env.DB_PORT,
-      username: process.env.DB_USERNAME || 'sql12666461',
-      password: process.env.DB_PASSWORD || 'k3emMdRnwj',
-      database: process.env.DB_NAME || 'sql12666461',
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
       entities: [Website, User],
       synchronize: true,
     }),
@@ -36,19 +36,5 @@ const envFilePath =
   providers: [AppService],
 })
 export class AppModule {
-  constructor() {
-    console.log('envFilePath ', envFilePath);
-    console.log('process.en.pwd', process.env.PWD);
-    console.log('process.env : ', process.env.DB_NAME);
-    console.log(
-      process.env.DB_HOST,
-      +process.env.DB_PORT,
-      process.env.DB_USERNAME,
-      process.env.DB_PASSWORD,
-      process.env.DB_DATABASE,
-    );
-    console.log('process.en.pwd', process.env.PWD);
-    // console.log('PWD : ', process.env.PWD);
-    // console.log('NODE_ENV : ', process.env.NODE_ENV);
-  }
+  constructor() {}
 }
