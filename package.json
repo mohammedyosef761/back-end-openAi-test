@@ -13,7 +13,7 @@
     "start:production": "SET NODE_ENV=prod&& pm2 start dist/main.js --name full-stack-test",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "SET NODE_ENV=prod&& node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
