@@ -31,6 +31,10 @@
 ```bash
 $ npm install
 ```
+#i f you face any problem
+$ npm install --force
+# to run the project
+npm run dev
 
 ## Running the app
 
