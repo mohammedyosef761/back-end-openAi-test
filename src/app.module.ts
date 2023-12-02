@@ -9,7 +9,7 @@ import { User } from './users/user.entity';
 import { ConfigModule } from '@nestjs/config';
 
 const envFilePath =
-  process.env.PWD == 'https://calm-erin-badger-sock.cyclic.app'
+  process.env.PWD == 'https://difficult-calf-nightshirt.cyclic.app'
     ? 'prod'
     : process.env.NODE_ENV;
 
@@ -37,6 +37,7 @@ const envFilePath =
 })
 export class AppModule {
   constructor() {
+    console.log('envFilePath ', envFilePath);
     console.log('process.en.pwd', process.env.PWD);
     console.log('process.env : ', process.env.DB_NAME);
     console.log(
