@@ -19,7 +19,7 @@ export class Website {
   @Column()
   websiteDescription: string;
 
-  @Column()
+  @Column({ type: 'text' })
   ai_description: string;
 
   @ManyToOne(() => User, (user) => user.websites, { cascade: true })

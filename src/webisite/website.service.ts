@@ -32,7 +32,7 @@ export class WebsiteService {
             },
             {
               role: 'user',
-              content: `Generate Islamic content as introduction for website related to: ${userInput} just in 25 words`,
+              content: `Generate Islamic content as introduction for website related to: ${userInput} in 50 words`,
             },
           ],
           temperature: 0.9,
