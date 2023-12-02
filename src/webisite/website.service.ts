@@ -86,7 +86,7 @@ export class WebsiteService {
       websiteInfo?.websiteDescription,
     );
 
-    console.log('ai_data', ai_data);
+    // console.log('ai_data', ai_data);
 
     return this.websiteRepository.save({
       ...websiteInfo,
